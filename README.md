@@ -6,17 +6,17 @@
 [![ESM](https://img.shields.io/badge/javascript-ESM-orange)](https://nodejs.org/api/esm.html)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-blue)](https://nodejs.org/)
 
-> Lightweight and customizable time formatting utility with locale support for **JavaScript** projects.
+> Lightweight, zero-dependency time utility with customizable formatting and locale support for JavaScript.
 
 ---
 
 ## ✨ Features
 
 - 🕒 Custom date-time formatting
-- 🌐 Locale support (`en`, `id`, etc.)
-- 🔁 Short and long format modes
-- 🧩 Modular, zero dependencies
-- ⏰ Auto timezone detection
+- 🌐 Built-in locale support (`en`, `id`, etc.)
+- 🔁 Long/short format options
+- 🧩 Pure ESM module, no dependencies
+- ⏰ Detects system timezone automatically
 
 ---
 
@@ -32,9 +32,6 @@ npm install @livyn/time
 
 ```js
 import time from '@livyn/time'
-// atau per modul
-import timestamp from '@livyn/time/times/timestamp'
-import timezone from '@livyn/time/times/timezone'
 ```
 
 ---
@@ -44,45 +41,66 @@ import timezone from '@livyn/time/times/timezone'
 ```js
 import time from '@livyn/time'
 
-time.timestamp() // → 2025-07-23T08:45:12.345Z
+console.log(time.timestamp()) 
+// → 2025-07-23T08:45:12.345Z
 
-time.timestamp('YYYY-MM-DD HH:mm:ss') 
-// → 2025-07-23 15:45:12
+console.log(time.timestamp('YYYY-MM-DD hh:mm:ss A')) 
+// → 2025-07-23 03:45:12 PM
 
-time.timestamp('dddd, MMMM Do YYYY', 'id') 
-// → Rabu, Juli 23 2025
+console.log(time.timestamp('YYYY-MM-DD HH:mm:ss a')) 
+// → 2025-07-23 15:45:12 pm
 
-time.timezone() 
+console.log(time.timestamp('dddd, YYYY-MM-DD HH:mm:ss')) 
+// → Thursday, 2025-07-24 00:11:53
+
+console.log(time.timestamp('dddd, YYYY MMMM DD HH:mm:ss a', 'id')) 
+// → Kamis, 2025 Juli 24 12:11:53 am
+
+console.log(time.timestamp('dddd, YYYY MM DD HH:mm:ss a', 'en')) 
+// → Thursday, 2025 07 24 12:11:53 am
+
+console.log(time.timestamp('dddd, Do MMMM YYYY HH:mm:ss Z', 'enShort')) 
+// → Thu, 24th Jul 2025 00:11:53 +07:00
+
+console.log(time.timestamp('ddd, D/M/YY h:mm A x', 'idShort')) 
+// → Kam, 24/7/25 12:11 AM 1721764313456
+
+console.log(time.timezone()) 
 // → Asia/Jakarta
 ```
 
 ---
 
-## 🧠 Format Support
+## 🧠 Format Tokens
 
 - `YYYY`, `MM`, `DD`, `HH`, `hh`, `mm`, `ss`
-- `A/a`, `dddd`, `ddd`, `Do`, `MMMM`, `MMM`
-- `Z`, `x`, `X`
+- `A`, `a` — AM/PM
+- `dddd`, `ddd` — full/short day
+- `Do` — ordinal day
+- `MMMM`, `MMM` — full/short month
+- `Z` — timezone offset
+- `x`, `X` — timestamp ms/sec
 
 ---
 
 ## 🌍 Locale Support
 
-- `en` (English)
-- `id` (Bahasa Indonesia)
-- `enShort`, `idShort` (Singkatan hari/bulan)
+- `en` – English
+- `id` – Indonesian
+- `enShort`, `idShort` – Abbreviated day/month
 
 ---
 
-## 📘 API Reference
+## 📘 API
 
 ### `timestamp(format?: string, locale?: string): string`
 
-Kembalikan waktu dalam format tertentu dan locale yang dipilih. Default format: `iso`, default locale: `en`.
+Returns a formatted date-time string.  
+Defaults: `format = "iso"`, `locale = "en"`.
 
 ### `timezone(): string`
 
-Kembalikan zona waktu lokal, contoh: `Asia/Jakarta`.
+Returns the current system timezone, e.g. `"Asia/Jakarta"`.
 
 ---
 
@@ -94,4 +112,4 @@ Kembalikan zona waktu lokal, contoh: `Asia/Jakarta`.
 
 ## ⚖️ License
 
-This project is licensed under the **MIT License** — see the [LICENSE](https://github.com/fajardison/livyn-time/blob/main/LICENSE) file for details.
+Licensed under the [MIT License](https://github.com/fajardison/livyn-time/blob/main/LICENSE).
