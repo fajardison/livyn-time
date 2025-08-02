@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "test:timestamp": "node ./samples/testTimestamp.js",
-    "test:timezone": "node ./samples/testTimeZone.js"
+    "test:timezone": "node ./samples/testTimezone.js"
   },
   "author": "Dimas Fajar",
   "license": "MIT",
