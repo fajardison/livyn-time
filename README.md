@@ -1,22 +1,27 @@
 # @livyn/time
 
-[![npm version](https://img.shields.io/npm/v/@livyn/time)](https://www.npmjs.com/package/@livyn/time)
+A lightweight utility to generate timestamps in various formats and languages (locales).
+
+![npm version](https://img.shields.io/npm/v/@livyn/time)
 [![Version](https://img.shields.io/badge/Version-v1.0.0-blue)](https://www.npmjs.com/package/@livyn/time?activeTab=versions)
 [![License](https://img.shields.io/badge/License-MIT-green)](https://github.com/fajardison/livyn-time/blob/main/LICENSE)
 [![ESM](https://img.shields.io/badge/javascript-ESM-orange)](https://nodejs.org/api/esm.html)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-blue)](https://nodejs.org/)
-
-> Lightweight, zero-dependency time utility with customizable formatting and locale support for JavaScript.
+![Supported Locales](https://img.shields.io/badge/locales-20%2B-blue)
 
 ---
 
 ## ✨ Features
 
-- 🕒 Custom date-time formatting
-- 🌐 Built-in locale support (`en`, `id`, etc.)
-- 🔁 Long/short format options
-- 🧩 Pure ESM module, no dependencies
-- ⏰ Detects system timezone automatically
+- Flexible time formatting (`YYYY-MM-DD`, `HH:mm:ss`, etc.)
+- Supports over 20 languages and locales
+- Full token support:
+  - `dddd`, `ddd`, `dd`
+  - `MMMM`, `MMM`, `MM`, `M`
+  - `Do`, `D`, `DD`
+  - `HH`, `hh`, `mm`, `ss`, `A`, `a`, etc.
+- Predefined formats: `iso`, `iso-local`, or custom
+- IANA timezone support
 
 ---
 
@@ -28,88 +33,135 @@ npm install @livyn/time
 
 ---
 
-## 📂 Exports
-
-```js
-import time from '@livyn/time'
-```
-
----
-
 ## 🚀 Usage
 
+### Default Import
+
 ```js
-import time from '@livyn/time'
+import time from '@livyn/time';
 
-console.log(time.timestamp()) 
-// → 2025-07-23T08:45:12.345Z
+time.timestamp();
+time.timezone();
+```
 
-console.log(time.timestamp('YYYY-MM-DD hh:mm:ss A')) 
-// → 2025-07-23 03:45:12 PM
+### Named Import
 
-console.log(time.timestamp('YYYY-MM-DD HH:mm:ss a')) 
-// → 2025-07-23 15:45:12 pm
+```js
+import { timestamp, timezone } from '@livyn/time';
 
-console.log(time.timestamp('dddd, YYYY-MM-DD HH:mm:ss')) 
-// → Thursday, 2025-07-24 00:11:53
-
-console.log(time.timestamp('dddd, YYYY MMMM DD HH:mm:ss a', 'id')) 
-// → Kamis, 2025 Juli 24 12:11:53 am
-
-console.log(time.timestamp('dddd, YYYY MM DD HH:mm:ss a', 'en')) 
-// → Thursday, 2025 07 24 12:11:53 am
-
-console.log(time.timestamp('dddd, Do MMMM YYYY HH:mm:ss Z', 'enShort')) 
-// → Thu, 24th Jul 2025 00:11:53 +07:00
-
-console.log(time.timestamp('ddd, D/M/YY h:mm A x', 'idShort')) 
-// → Kam, 24/7/25 12:11 AM 1721764313456
-
-console.log(time.timezone()) 
-// → Asia/Jakarta
+timestamp('ms');        // UNIX timestamp in milliseconds
+timezone();             // Timezone offset e.g., "+0700"
 ```
 
 ---
 
-## 🧠 Format Tokens
+## ⏱️ timestamp(format?, locale?, timezone?)
 
-- `YYYY`, `MM`, `DD`, `HH`, `hh`, `mm`, `ss`
-- `A`, `a` — AM/PM
-- `dddd`, `ddd` — full/short day
-- `Do` — ordinal day
-- `MMMM`, `MMM` — full/short month
-- `Z` — timezone offset
-- `x`, `X` — timestamp ms/sec
+Generate a timestamp string based on formatting, localization, and timezone.
 
----
+### Example:
 
-## 🌍 Locale Support
+```js
+import time from '@livyn/time';
 
-- `en` – English
-- `id` – Indonesian
-- `enShort`, `idShort` – Abbreviated day/month
+time.timestamp();
+time.timestamp('YYYY-MM-DD HH:mm:ss');
+time.timestamp('dddd, D MMMM YYYY HH:mm:ss', 'id');
+time.timestamp('ddd, Do MMMM YYYY hh:mm A Z', 'en');
+time.timestamp('YYYY-MM-DD HH:mm:ss', 'id', 'Asia/Jakarta');
+```
 
----
+### Output Sample:
 
-## 📘 API
-
-### `timestamp(format?: string, locale?: string): string`
-
-Returns a formatted date-time string.  
-Defaults: `format = "iso"`, `locale = "en"`.
-
-### `timezone(): string`
-
-Returns the current system timezone, e.g. `"Asia/Jakarta"`.
+```
+2025-08-03 01:10:26 AM
+2025-08-03 01:10:26
+Minggu, 3 Agustus 2025 01:10:26
+Sun, 3rd August 2025 01:10 AM +07:00
+```
 
 ---
 
-## 👤 Author
+## 📦 Predefined Formats
 
-**[Dimas Fajar](https://github.com/fajardison)**
+Use shorthand predefined formats for convenience:
+
+| Format      | Output Example                        |
+|-------------|----------------------------------------|
+| `iso`       | `2025-07-30T16:00:00.000Z` (UTC ISO)  |
+| `iso-local` | `2025-07-30 23:00:00` (local time)    |
 
 ---
 
-## ⚖️ License
+## 🧩 Format Tokens
 
-Licensed under the [MIT License](https://github.com/fajardison/livyn-time/blob/main/LICENSE).
+| Token  | Meaning                        | Example      |
+|--------|--------------------------------|--------------|
+| `YYYY` | Full year                      | 2025         |
+| `MM`   | Month with leading zero        | 07           |
+| `D`    | Day of the month               | 3            |
+| `dddd` | Weekday name                   | Sunday       |
+| `hh`   | Hour (12h format)              | 01           |
+| `HH`   | Hour (24h format)              | 13           |
+| `mm`   | Minutes                        | 45           |
+| `ss`   | Seconds                        | 08           |
+| `A/a`  | AM/PM                          | AM           |
+| `Z`    | Timezone offset                | +07:00       |
+| `X/x`  | Unix timestamp (s/ms)          | 1722355200   |
+
+---
+
+## 🌍 Supported Locales
+
+- `en`, `id`, `fr`, `de`, `es`, `it`, `ja`, `zh`, `ru`, `pt`, `hi`, `ko`, `tr`, `nl`, `th`, `vi`, `pl`, `ar`, `el`, `sv`
+
+---
+
+## 🌐 timezone(options?)
+
+Retrieve current timezone metadata and locale-aware time string.
+
+### Example:
+
+```js
+import time from '@livyn/time';
+
+time.timezone();
+time.timezone({ locale: 'id', short: true });
+time.timezone({ locale: 'id' });
+time.timezone({ format: 'dddd, D MMMM YYYY HH:mm:ss' });
+time.timezone({
+  locale: 'id',
+  format: 'dddd, D MMMM YYYY HH:mm:ss',
+});
+```
+
+### Output:
+
+```json
+{
+  "timeZone": "Asia/Jakarta",
+  "offset": "+0700",
+  "abbreviation": "WIB",
+  "country": "Indonesia",
+  "dst": false,
+  "localeTime": "Minggu, 3 Agustus 2025 01:04:50"
+}
+```
+
+---
+
+### Timezone Options
+
+| Option     | Type     | Default                         | Description                                  |
+|------------|----------|----------------------------------|----------------------------------------------|
+| `locale`   | string   | `'en'`                           | Language for `localeTime`                    |
+| `short`    | boolean  | `false`                          | Return only `timeZone` and `offset`          |
+| `format`   | string   | `'dddd, D MMMM YYYY HH:mm:ss A'`| Format string using `timestamp()` internally |
+| `timeZone` | string   | Current system time zone         | IANA zone, e.g. `'Asia/Jakarta'`             |
+
+---
+
+## 📄 License
+
+MIT © [Dimas Fajar](https://github.com/fajardison)
