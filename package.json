@@ -1,0 +1,46 @@
+{
+  "name": "@livyn/time",
+  "version": "1.0.0",
+  "description": "A lightweight, efficient, and modular time utility for formatting timestamps, retrieving timezones, and working with time-related data in JavaScript/Node.js projects.",
+  "type": "module",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "sideEffects": false,
+  "files": [
+    "constants/",
+    "helpers/",
+    "time/",
+    "validators/",
+    "index.js",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test:timestamp": "node ./samples/testTimestamp.js",
+    "test:timezone": "node ./samples/testTimeZone.js"
+  },
+  "author": "Dimas Fajar",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "homepage": "https://github.com/fajardison/livyn-time",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fajardison/livyn-time.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fajardison/livyn-time/issues"
+  },
+  "keywords": [
+    "livyn",
+    "time",
+    "timestamp",
+    "timezone",
+    "utility",
+    "esm"
+  ]
+}
